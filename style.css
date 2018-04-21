@@ -1,0 +1,52 @@
+	
+
+
+body {
+		margin:0;
+		background:#333;
+		color:white;
+		font-family:helvetica, arial;
+		font-size:30pt;
+
+	}
+
+p {
+
+		position:absolute;bottom:0; left:70px; z-index:2;
+
+}
+
+button {
+
+		position:absolute;bottom:0; left:70px; z-index:2;
+
+}
+
+html {
+	background-color:#ffb9bb;
+}
+
+
+.info {
+	font-size: 99px;
+	font-style: italic;
+	color:#ffe5ce;
+	position:absolute;
+	bottom:25px; 
+	left:70px; 
+	z-index:2;
+}
+
+.info a {
+	color:#ffe5ce;
+	
+}
+
+.info a:hover{
+	text-decoration: none;
+	color: #fbf6f1;
+}
+
+.container {
+	background-color: red;
+}

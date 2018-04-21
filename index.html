@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+	<title>BAND NAME</title>
+	<meta name="description" content="A randomly-generated mouse harp with randomly-generated key change functionality!">
+<meta name="keywords" content="interactive,music,tone.js,mouse,fun,chrome,javascript,js">
+<meta name="author" content="Kyle Rosse">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title"
+content="Block Chords" />
+<meta property="article:author"
+content="Abe Rubenstein" />
+<meta property="og:description" content="A randomly-generated mouse harp with randomly-generated key change functionality!" />
+<meta property="og:image"
+content="http://abe.sh/block-chords/blockchords.png" />
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="text/javascript" src="Tone.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+
+
+
+<body>
+	<div class="container">
+		<div class="info">
+			<a href="http://www.smilingstrange.com">BAND NAME</p>
+		</div>
+	</div>
+	
+
+
+
+	<script type="text/javascript" language="javascript">
+
+	// random note between A2 and A4 (whole steps only)
+	function randomKey() {
+		return 110 * Math.pow(Math.pow(2, 1/12), Math.ceil(Math.random() * 15));
+	}
+
+	var keyBase = randomKey();
+
+	var synth = new Tone.PolySynth(16, Tone.MonoSynth);
+	synth.setVolume(-24); // default volume always makes my ears bleed
+	synth.toMaster();
+
+	var div = document.createElement('div');
+	// var enter = document.createTextNode("ENTER");
+	// div.appendChild(enter);
+	div.style.height='100%';
+	div.style.lineHeight='0';
+	div.style.float='left';
+	div.style.overflow="hidden";
+	div.style.backgroundColor = '#ffb9bb';
+
+
+	// var enterLink = document.createElement('a');
+	// var enter = document.createTextNode("ENTER");
+	// enterLink.setAttribute('href', "http://google.com");
+	// enterLink.appendChild(enter);
+	// enterLink.setAttribute("style", "color:red; font-size:25px;");
+	// enterLink.style.lineHeight='0';
+	// enterLink.style.float='left';
+
+	
+	// div.appendChild(enterLink);
+
+	
+
+	
+
+	var sqPx = window.innerWidth / 48;
+
+	var randColorBase = Math.random() * 11748460;
+	if (randColorBase < 1566462) randColorBase = 1566462;
+	else if (randColorBase > 10181998) randColorBase = 10181998;
+
+	for (i = 0; i < window.innerWidth; i += sqPx ) {
+		for (j = 0; j < window.innerHeight/3; j += sqPx) {
+
+			var randColorStr = '#'+Math.floor(Math.random()*255+randColorBase).toString(16);
+
+			var block = document.createElement('div');
+			block.style.position='relative';
+			block.style.display='inline-block';
+			block.style.margin ='0px';
+			block.style.padding ='0px';
+			block.style.float= 'left';
+			block.style.width = sqPx + 'px';
+			block.style.height = sqPx + 'px';
+			block.style.zIndex = '1';
+
+			if (Math.random() > 0.97) {
+				block.style.zIndex = 5;
+				block.style.backgroundColor = 'white';
+				block.addEventListener('mouseover', function() {
+					if (this.style.background != 'transparent') {
+						keyBase = randomKey();
+						synth.triggerAttackRelease(4 * keyBase / 5 * 16, '4n', Tone.Time);
+					}
+					this.style.background = 'transparent';
+					this.style.zIndex = 1;
+				});
+			}
+			else {
+				block.style.zIndex = 5;
+				block.style.backgroundColor = randColorStr;
+				block.addEventListener('mouseover', function() {
+					if (this.style.background != 'transparent') {
+						// random from three octaves of major thirds
+						var r = Math.random();
+						if (r < 0.33) {
+							synth.triggerAttackRelease( 1/2*4*keyBase /5 * Math.ceil(Math.random() * 6), '4n', Tone.Time);
+						}
+						else if (r > 0.67) {
+							synth.triggerAttackRelease( 2*4*keyBase /5 * Math.ceil(Math.random() * 6), '4n', Tone.Time);
+						}
+						else {
+							synth.triggerAttackRelease( 4*keyBase /5 * Math.ceil(Math.random() * 6), '4n', Tone.Time);
+						}
+					}
+					this.style.background = 'transparent';
+					this.style.zIndex = 1;
+				});
+			}
+
+			div.appendChild(block);
+		}
+	}
+
+	document.body.appendChild(div);
+	
+
+	</script>
+
+</body>
+</html>
